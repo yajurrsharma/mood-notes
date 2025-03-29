@@ -5,14 +5,13 @@ function App() {
   const [note, setNote] = useState("");
   const [notes, setNotes] = useState([]);
 
-  // Fetch notes from API on page load
   useEffect(() => {
     const fetchNotes = async () => {
       try {
         const res = await fetch("http://127.0.0.1:8000/get_notes/");
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
-        setNotes(data.notes); // Load notes into state
+        setNotes(data.notes);
         console.log("Fetched Notes:", data.notes);
       } catch (err) {
         console.error("Error fetching notes:", err);
@@ -34,8 +33,8 @@ function App() {
 
       if (!res.ok) throw new Error("Failed to add note");
 
-      setNote(""); // Clear input
-      setNotes([...notes, { text: note }]); // Update UI without refresh
+      setNote("");
+      setNotes([...notes, { text: note }]); 
     } catch (err) {
       console.error("Error adding note:", err);
     }
