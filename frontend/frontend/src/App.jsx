@@ -1,44 +1,51 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import "./styles.css";
+
+const API_BASE_URL = "http://127.0.0.1:8000"; // Your FastAPI backend
 
 function App() {
   const [note, setNote] = useState("");
   const [notes, setNotes] = useState([]);
 
-  // Fetch notes from API on page load
+  // Fetch notes from Firebase when the app loads
   useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        const res = await fetch("http://127.0.0.1:8000/get_notes/");
-        if (!res.ok) throw new Error("Failed to fetch");
-        const data = await res.json();
-        setNotes(data.notes); // Load notes into state
-        console.log("Fetched Notes:", data.notes);
-      } catch (err) {
-        console.error("Error fetching notes:", err);
-      }
-    };
-
-    fetchNotes();
+    axios.get(`${API_BASE_URL}/get_notes`)
+      .then((response) => {
+        console.log("Fetched notes:", response.data.notes);
+        setNotes(response.data.notes);
+      })
+      .catch((error) => console.error("Error fetching notes:", error));
   }, []);
 
+  // Function to add note
   const addNote = async () => {
-    if (!note) return;
+    if (!note.trim()) return;
+
+    const newNote = { text: note, mood: getMood(note) };
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/add_note/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: note }),
-      });
+      console.log("Sending note:", newNote);
+      const response = await axios.post(`${API_BASE_URL}/add_note/`, newNote);
+      console.log("Response from server:", response.data);
 
-      if (!res.ok) throw new Error("Failed to add note");
-
-      setNote(""); // Clear input
-      setNotes([...notes, { text: note }]); // Update UI without refresh
-    } catch (err) {
-      console.error("Error adding note:", err);
+      if (response.data.message === "Note added successfully!") {
+        setNotes([newNote, ...notes]); // Update UI immediately
+        setNote(""); // Clear input field
+      }
+    } catch (error) {
+      console.error("Error adding note:", error.response ? error.response.data : error);
     }
+  };
+
+  // Function to determine mood
+  const getMood = (text) => {
+    text = text.toLowerCase();
+    if (text.includes("not happy") || text.includes("unhappy")) return "Sad"; 
+    if (text.includes("angry") || text.includes("frustrated")) return "Angry";
+    if (text.includes("happy") || text.includes("excited")) return "Happy";
+    if (text.includes("sad") || text.includes("lonely")) return "Sad";
+    return "Calm";
   };
 
   return (
@@ -56,17 +63,19 @@ function App() {
         </button>
       </div>
 
-      <div className="notes-list">
-        <h2>Your Notes</h2>
-        {notes.length === 0 ? (
-          <p className="no-note">No notes yet.</p>
-        ) : (
-          notes.map((n, index) => (
-            <div key={index} className="note-item">
-              <p>{n.text}</p>
-            </div>
-          ))
-        )}
+      <div className="notes-grid">
+        {["Angry", "Happy", "Sad", "Calm"].map((mood) => (
+          <div key={mood} className={`notes-column ${mood.toLowerCase()}`}>
+            <h2>{mood}</h2>
+            {notes
+              .filter((n) => n.mood === mood)
+              .map((n, index) => (
+                <div key={index} className="note-item">
+                  <p>{n.text}</p>
+                </div>
+              ))}
+          </div>
+        ))}
       </div>
     </div>
   );
