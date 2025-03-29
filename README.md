@@ -1,5 +1,5 @@
-### Mood Notes App ###
+# Mood Notes App 
+
+Still _WORK IN PROGRESS_, so expect bugs and regular updates to the app.
 
 
-
-_Still **WORK IN PROGRESS**, so expect bugs and regular updates to the app_
