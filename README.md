@@ -1,5 +1,7 @@
 # Mood Notes
 
-Write notes, get advice according to your mood, and build a knowledge base to help yourself!
+Check below to see status of project :)
 
 ***
+
+## _WORK IN PROGRESS_
