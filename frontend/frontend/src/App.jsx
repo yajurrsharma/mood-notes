@@ -41,32 +41,50 @@ function App() {
 
   return (
     <div className="app-container">
+      {/* Title (unchanged) */}
       <h1>Mood Notes</h1>
 
-      <div className="note-input">
-        <textarea
-          placeholder="Write your note here..."
-          value={note}
-          onChange={(e) => setNote(e.target.value)}
-        ></textarea>
-        <button className="btn" onClick={addNote}>
-          <p className="btn-text">Add Note</p>
-        </button>
-      </div>
+      {/* Input + Columns Container (new flex layout) */}
+      <div className="input-and-columns">
+        {/* Left Column - All Notes */}
+        <div className="left-column">
+          <h2>Your Moods</h2>
+          <div className="notes-scrollable">
+            {notes.map((n, index) => (
+              <div key={index} className="note-box">
+                <p>{n.text.length > 100 ? `${n.text.substring(0, 100)}...` : n.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
 
-      <div className="notes-grid">
-        {["Angry", "Happy", "Sad", "Calm"].map((mood) => (
-          <div key={mood} className={`notes-column ${mood.toLowerCase()}`}>
-            <h2>{mood}</h2>
+        {/* Input Box (centered between columns) */}
+        <div className="input-container">
+          <div className="note-input">
+            <textarea
+              placeholder="Write your note here..."
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            ></textarea>
+            <button className="btn" onClick={addNote}>
+              <p className="btn-text">Add Note</p>
+            </button>
+          </div>
+        </div>
+
+        {/* Right Column - !important Notes */}
+        <div className="right-column">
+          <h2>Important</h2>
+          <div className="notes-scrollable">
             {notes
-              .filter((n) => n.mood === mood)
+              .filter((n) => n.text.trim().endsWith("!important"))
               .map((n, index) => (
-                <div key={index} className="note-item">
-                  <p>{n.text}</p>
+                <div key={index} className="note-box important">
+                  <p>{n.text.replace("!important", "")}</p>
                 </div>
               ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );

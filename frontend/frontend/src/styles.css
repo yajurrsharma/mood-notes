@@ -192,3 +192,50 @@ body {
     color: black !important;
     background-color: white;
 }
+
+.app-container {
+  background: #1e1e1e;
+  color: white;
+  width: 200%;
+  max-width: 1000px;
+  padding: 30px;
+  margin: 50px auto;
+  border-radius: 10px;
+}
+
+.input-and-columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+}
+
+.left-column, .right-column {
+  width: 200px; 
+  background: #333;
+  border-radius: 8px;
+  padding: 15px;
+  height: 400px;
+  overflow: hidden;
+}
+
+.input-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 400px; 
+}
+
+.note-input {
+  width: 100%;
+  max-width: 400px; 
+}
+
+.notes-scrollable {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.note-input textarea{
+  height: 150px;
+}
