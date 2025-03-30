@@ -8,6 +8,7 @@ function App() {
   const [note, setNote] = useState("");
   const [notes, setNotes] = useState([]);
 
+<<<<<<< HEAD
   // Fetch notes from Firebase when the app loads
   useEffect(() => {
     axios.get(`${API_BASE_URL}/get_notes`)
@@ -16,6 +17,22 @@ function App() {
         setNotes(response.data.notes);
       })
       .catch((error) => console.error("Error fetching notes:", error));
+=======
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const res = await fetch("http://127.0.0.1:8000/get_notes/");
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
+        setNotes(data.notes);
+        console.log("Fetched Notes:", data.notes);
+      } catch (err) {
+        console.error("Error fetching notes:", err);
+      }
+    };
+
+    fetchNotes();
+>>>>>>> c1bcd9ec40f14d44aa4c7c8b21d55c3e6e5485b8
   }, []);
 
   // Function to add note
@@ -29,12 +46,21 @@ function App() {
       const response = await axios.post(`${API_BASE_URL}/add_note/`, newNote);
       console.log("Response from server:", response.data);
 
+<<<<<<< HEAD
       if (response.data.message === "Note added successfully!") {
         setNotes([newNote, ...notes]); // Update UI immediately
         setNote(""); // Clear input field
       }
     } catch (error) {
       console.error("Error adding note:", error.response ? error.response.data : error);
+=======
+      if (!res.ok) throw new Error("Failed to add note");
+
+      setNote("");
+      setNotes([...notes, { text: note }]); 
+    } catch (err) {
+      console.error("Error adding note:", err);
+>>>>>>> c1bcd9ec40f14d44aa4c7c8b21d55c3e6e5485b8
     }
   };
 
