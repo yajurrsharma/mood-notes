@@ -1,32 +1,33 @@
-from fastapi import FastAPI
+from flask import Flask, request, jsonify
 from firebase_config import db
-from fastapi.middleware.cors import CORSMiddleware
+from flask_cors import CORS
 from datetime import datetime
 
-app = FastAPI()
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all origins
 
-# Fix CORS issues
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-@app.get("/")
+@app.route("/", methods=["GET"])
 def home():
-    return {"message": "Mood Notes API is Running!"}
+    return jsonify({"message": "Mood Notes API is Running!"})
 
-@app.post("/add_note/")
-def add_note(note: dict):
+@app.route("/add_note/", methods=["POST"])
+def add_note():
+    note = request.get_json()
+    if not note:
+        return jsonify({"error": "No data provided"}), 400
+
     note["timestamp"] = datetime.utcnow().isoformat()  # Add timestamp
     doc_ref = db.collection("notes").document()
     doc_ref.set(note)
-    return {"message": "Note added successfully!"}
 
-@app.get("/get_notes")
+    return jsonify({"message": "Note added successfully!"})
+
+@app.route("/get_notes", methods=["GET"])
 def get_notes():
     notes = db.collection("notes").order_by("timestamp", direction="DESCENDING").stream()
     notes_list = [{"id": note.id, **note.to_dict()} for note in notes]
-    return {"notes": notes_list}
+
+    return jsonify({"notes": notes_list})
+
+if __name__ == "__main__":
+    app.run(debug=True)
