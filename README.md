@@ -1,5 +1,7 @@
 # Mood Notes App 
 
-Still _WORK IN PROGRESS_, so expect bugs and regular updates to the app.
+still _**WORK IN PROGRESS**_, so expect bugs and regular updates to the app.
+
+Using Flask for the backend server right now, expect a release soon :)
 
 
