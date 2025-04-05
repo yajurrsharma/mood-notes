@@ -4,11 +4,24 @@
 
 A simple web interface which allows you to write notes, save them, and analyse them with AI to provide insights, help, and other tips ✨
 
+---
+
 ## Requirements
 
 ### Backend
 
 Run `pip install -r requirements.txt` in the Backend Folder.
+
+### Frontend
+
+Run 
+```
+npm install react react-dom axios
+npm install --save-dev vite
+```
+in the Frontend Folder via Git Bash.
+
+---
 
 ## Installation
 
