@@ -19,7 +19,7 @@ Run
 npm install react react-dom axios
 npm install --save-dev vite
 ```
-in the Frontend Folder via Git Bash (You should have Node.js installed).
+in the Frontend Folder via Git Bash (you should have Node.js installed).
 
 ---
 
