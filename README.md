@@ -6,7 +6,9 @@ A simple web interface which allows you to write notes, save them, and analyse t
 
 ## Requirements
 
-to be updated soon.
+### Backend
+
+Run `pip install -r requirements.txt` in the Backend Folder.
 
 ## Installation
 
