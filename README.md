@@ -10,7 +10,7 @@ A simple web interface which allows you to write notes, save them, and analyse t
 
 ### Backend
 
-Run `pip install -r requirements.txt` in the Backend Folder.
+Run `pip install -r requirements.txt` in the **Backend** folder.
 
 ### Frontend
 
@@ -19,7 +19,7 @@ Run
 npm install react react-dom axios
 npm install --save-dev vite
 ```
-in the Frontend Folder via Git Bash (you should have Node.js installed).
+in the **Frontend** folder via **Git Bash** (you should have Node.js installed).
 
 ---
 
