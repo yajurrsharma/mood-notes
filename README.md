@@ -19,13 +19,13 @@ Run
 npm install react react-dom axios
 npm install --save-dev vite
 ```
-in the **Frontend** folder via **Git Bash** (you should have Node.js installed).
+in the **Frontend** folder via **Git Bash** (you should have **Node.js** installed).
 
 ---
 
 ## Installation
 
-- Go to any folder of your choice, and clone the repository (you should have Git installed on your computer). Preferably, use Git Bash.
+- Go to any folder of your choice, and clone the repository (you should have **Git** installed on your computer). Preferably, use Git Bash.
 
 ```bash
 git clone https://github.com/yajurrsharma/mood-notes
